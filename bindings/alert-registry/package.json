@@ -1,5 +1,5 @@
 {
-  "name": "@tx-wat/alert-registry-bindings",
+  "name": "@rwa-call/alert-registry-bindings",
   "version": "0.1.0",
   "description": "TypeScript bindings for the AlertRegistry Soroban smart contract",
   "main": "dist/index.js",
@@ -19,11 +19,11 @@
     "typescript",
     "bindings"
   ],
-  "author": "Tx-wat",
+  "author": "RWA-Call",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Tx-wat/stellar-txwatch-contracts.git",
+    "url": "https://github.com/RWA-Call/rwa-call-contracts.git",
     "directory": "bindings/alert-registry"
   },
   "peerDependencies": {

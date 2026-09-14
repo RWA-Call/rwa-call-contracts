@@ -49,4 +49,4 @@ The following are **out of scope**:
 ## Contact
 
 Maintainer: Emmanuel Chukwunyere — emmanuelanalaba@gmail.com  
-Organization: [Tx-wat](https://github.com/Tx-wat)
+Organization: [RWA-Call](https://github.com/RWA-Call)

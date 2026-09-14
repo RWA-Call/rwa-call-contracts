@@ -1,7 +1,7 @@
-# @tx-wat/watcher-registry
+# @rwa-call/watcher-registry
 
 TypeScript bindings for the **WatcherRegistry** Soroban smart contract,
-part of the [stellar-txwatch-contracts](https://github.com/Tx-wat/stellar-txwatch-contracts)
+part of the [rwa-call-contracts](https://github.com/RWA-Call/rwa-call-contracts)
 project.
 
 These bindings are generated from the compiled WASM contract spec using
@@ -11,7 +11,7 @@ and published automatically on every GitHub release.
 ## Installation
 
 ```bash
-npm install @tx-wat/watcher-registry @stellar/stellar-sdk
+npm install @rwa-call/watcher-registry @stellar/stellar-sdk
 ```
 
 ## Usage
@@ -20,7 +20,7 @@ npm install @tx-wat/watcher-registry @stellar/stellar-sdk
 import {
   Client,
   networks,
-} from "@tx-wat/watcher-registry";
+} from "@rwa-call/watcher-registry";
 import { Keypair, Networks } from "@stellar/stellar-sdk";
 
 // Connect to testnet
@@ -74,8 +74,8 @@ class. The method signatures mirror the Soroban contract interface exactly.
 
 | Network | Contract ID |
 |---|---|
-| Testnet | See [DEPLOYMENTS.md](https://github.com/Tx-wat/stellar-txwatch-contracts/blob/main/DEPLOYMENTS.md) |
-| Mainnet | See [DEPLOYMENTS.md](https://github.com/Tx-wat/stellar-txwatch-contracts/blob/main/DEPLOYMENTS.md) |
+| Testnet | See [DEPLOYMENTS.md](https://github.com/RWA-Call/rwa-call-contracts/blob/main/DEPLOYMENTS.md) |
+| Mainnet | See [DEPLOYMENTS.md](https://github.com/RWA-Call/rwa-call-contracts/blob/main/DEPLOYMENTS.md) |
 
 ## Generating bindings locally
 

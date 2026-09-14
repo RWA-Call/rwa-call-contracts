@@ -2,7 +2,7 @@
 
 ## Overview
 
-The `WatcherRegistry` contract stores a set of authorized watcher node addresses on-chain. Only addresses registered by an admin may act as watchers in the Tx-wat system.
+The `WatcherRegistry` contract stores a set of authorized watcher node addresses on-chain. Only addresses registered by an admin may act as watchers in the RWA-Call system.
 
 ---
 

@@ -1,6 +1,6 @@
 # AlertRegistry
 
-> Part of [stellar-txwatch-contracts](https://github.com/Tx-wat/stellar-txwatch-contracts)
+> Part of [rwa-call-contracts](https://github.com/RWA-Call/rwa-call-contracts)
 
 On-chain registry for alert configurations. Each alert specifies a target
 contract address to watch, a set of rule descriptors, and a SHA-256 hash of

@@ -3,7 +3,7 @@ name: Publish TypeScript Bindings
 # Runs on every published GitHub release (e.g. v0.1.0).
 # Generates TypeScript bindings from the compiled WASM using
 # `stellar contract bindings typescript`, then publishes the
-# resulting package to npm under @tx-wat/watcher-registry.
+# resulting package to npm under @rwa-call/watcher-registry.
 on:
   release:
     types: [published]
@@ -69,19 +69,19 @@ jobs:
 
           // Our curated metadata
           const meta = {
-            name:        "@tx-wat/watcher-registry",
+            name:        "@rwa-call/watcher-registry",
             version:     process.env.RELEASE_TAG.replace(/^v/, ""),
-            description: "TypeScript bindings for the stellar-txwatch WatcherRegistry Soroban contract",
-            keywords:    ["stellar", "soroban", "smart-contract", "watcher-registry", "txwatch", "blockchain"],
-            author:      "Tx-wat <https://github.com/Tx-wat>",
+            description: "TypeScript bindings for the RWA Call WatcherRegistry Soroban contract",
+            keywords:    ["stellar", "soroban", "smart-contract", "watcher-registry", "rwa-call", "blockchain"],
+            author:      "RWA-Call <https://github.com/RWA-Call>",
             license:     "MIT",
             repository: {
               type:      "git",
-              url:       "https://github.com/Tx-wat/stellar-txwatch-contracts.git",
+              url:       "https://github.com/RWA-Call/rwa-call-contracts.git",
               directory: "bindings/watcher-registry",
             },
-            homepage: "https://github.com/Tx-wat/stellar-txwatch-contracts#readme",
-            bugs:     { url: "https://github.com/Tx-wat/stellar-txwatch-contracts/issues" },
+            homepage: "https://github.com/RWA-Call/rwa-call-contracts#readme",
+            bugs:     { url: "https://github.com/RWA-Call/rwa-call-contracts/issues" },
           };
 
           const merged = { ...generated, ...meta };

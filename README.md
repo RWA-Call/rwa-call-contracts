@@ -1,7 +1,7 @@
-# stellar-txwatch-contracts
+# rwa-call-contracts
 
 Soroban smart contracts for on-chain alert configuration storage and watcher registry.  
-Part of the [Tx-wat](https://github.com/Tx-wat) organization.
+Part of the [RWA-Call](https://github.com/RWA-Call) organization.
 
 ## Contracts
 
@@ -32,7 +32,7 @@ make bindings
 TypeScript bindings for the AlertRegistry contract are available on npm:
 
 ```bash
-npm install @tx-wat/alert-registry-bindings
+npm install @rwa-call/alert-registry-bindings
 ```
 
 See [bindings/alert-registry/README.md](bindings/alert-registry/README.md) for usage examples.
@@ -52,7 +52,7 @@ flowchart TD
         WR["WatcherRegistry\n─────────────\nstores authorized\nwatcher addresses"]
     end
 
-    subgraph OffChain["Off-chain (stellar-txwatch-core)"]
+    subgraph OffChain["Off-chain (rwa-call-core)"]
         W["Watcher Node\n─────────────\npolls Horizon\nmatches rules\nfires webhooks"]
     end
 
@@ -290,11 +290,11 @@ automatically from the compiled WASM on every release using
 `stellar contract bindings typescript`.
 
 ```bash
-npm install @tx-wat/watcher-registry @stellar/stellar-sdk
+npm install @rwa-call/watcher-registry @stellar/stellar-sdk
 ```
 
 ```typescript
-import { Client, networks } from "@tx-wat/watcher-registry";
+import { Client, networks } from "@rwa-call/watcher-registry";
 
 const client = new Client({
   contractId: networks.testnet.contractId,
@@ -325,8 +325,8 @@ See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Sister Repos
 
-- **Core engine:** https://github.com/Tx-wat/stellar-txwatch-core
-- **Web dashboard:** https://github.com/Tx-wat/stellar-txwatch-web
+- **Core engine:** https://github.com/RWA-Call/rwa-call-core
+- **Web dashboard:** https://github.com/RWA-go/rwa-go-web
 
 ## License
 

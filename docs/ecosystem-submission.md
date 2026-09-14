@@ -1,6 +1,6 @@
 # Ecosystem Submission Guide
 
-This document tracks the submission of `stellar-txwatch-contracts` to the
+This document tracks the submission of `rwa-call-contracts` to the
 Stellar Developer Tools ecosystem listing and the Soroban example contracts
 repository.
 
@@ -20,16 +20,16 @@ The entry below is ready to be added to the appropriate section of
 `stellar/stellar-docs` repository.
 
 ```mdx
-### stellar-txwatch-contracts
+### rwa-call-contracts
 
 On-chain Soroban smart contracts for alert configuration storage and watcher
-node authorization, part of the [Tx-wat](https://github.com/Tx-wat) monitoring
+node authorization, part of the [RWA-Call](https://github.com/RWA-Call) monitoring
 ecosystem.
 
 | Property | Value |
 |---|---|
-| **Repository** | https://github.com/Tx-wat/stellar-txwatch-contracts |
-| **npm (TypeScript bindings)** | `@tx-wat/watcher-registry` |
+| **Repository** | https://github.com/RWA-Call/rwa-call-contracts |
+| **npm (TypeScript bindings)** | `@rwa-call/watcher-registry` |
 | **Network** | Testnet · Mainnet |
 | **Language** | Rust (Soroban SDK 22) |
 | **License** | MIT |
@@ -43,9 +43,9 @@ ecosystem.
 
 **Links**
 
-- [Function reference — Alert Registry](https://github.com/Tx-wat/stellar-txwatch-contracts/blob/main/docs/alert-registry.md)
-- [Function reference — Watcher Registry](https://github.com/Tx-wat/stellar-txwatch-contracts/blob/main/docs/watcher-registry.md)
-- [Deployed addresses](https://github.com/Tx-wat/stellar-txwatch-contracts/blob/main/DEPLOYMENTS.md)
+- [Function reference — Alert Registry](https://github.com/RWA-Call/rwa-call-contracts/blob/main/docs/alert-registry.md)
+- [Function reference — Watcher Registry](https://github.com/RWA-Call/rwa-call-contracts/blob/main/docs/watcher-registry.md)
+- [Deployed addresses](https://github.com/RWA-Call/rwa-call-contracts/blob/main/DEPLOYMENTS.md)
 ```
 
 ### How to submit
@@ -56,7 +56,7 @@ ecosystem.
 3. Add the MDX block above under the **Smart Contracts / Monitoring** category
    (create the category if it does not exist).
 4. Open a pull request with the title:
-   `feat(tools): add stellar-txwatch-contracts to ecosystem listing`
+   `feat(tools): add rwa-call-contracts to ecosystem listing`
 5. Fill in the PR description referencing this file and the project README.
 
 ---
@@ -113,7 +113,7 @@ Create `contracts/watcher-registry/README.md` and
 ```markdown
 # <ContractName>
 
-> Part of [stellar-txwatch-contracts](https://github.com/Tx-wat/stellar-txwatch-contracts)
+> Part of [rwa-call-contracts](https://github.com/RWA-Call/rwa-call-contracts)
 
 One-paragraph description of what the contract does and why it is useful as an
 example.
@@ -156,7 +156,7 @@ See [docs/<contract-name>.md](../../docs/<contract-name>.md).
 ## 3. npm Package — TypeScript Bindings
 
 TypeScript bindings for `WatcherRegistry` are published to npm as
-`@tx-wat/watcher-registry` via the
+`@rwa-call/watcher-registry` via the
 [publish-bindings workflow](../.github/workflows/publish-bindings.yml).
 
 ### Publishing steps (manual)
@@ -187,6 +187,6 @@ npm publish --access public
 
 | Secret | Description |
 |---|---|
-| `NPM_TOKEN` | npm automation token with publish rights to the `@tx-wat` scope |
+| `NPM_TOKEN` | npm automation token with publish rights to the `@rwa-call` scope |
 
 Set this in **GitHub → Settings → Secrets and variables → Actions**.

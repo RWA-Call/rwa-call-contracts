@@ -1,6 +1,6 @@
 # Watcher Registry — Function Reference
 
-Contract that stores authorized watcher node addresses on-chain. Only registered watchers (trusted instances of `stellar-txwatch-core`) may interact with the alert registry.
+Contract that stores authorized watcher node addresses on-chain. Only registered watchers (trusted instances of `rwa-call-core`) may interact with the alert registry.
 
 ---
 

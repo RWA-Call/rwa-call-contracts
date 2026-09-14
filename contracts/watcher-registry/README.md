@@ -1,6 +1,6 @@
 # WatcherRegistry
 
-> Part of [stellar-txwatch-contracts](https://github.com/Tx-wat/stellar-txwatch-contracts)
+> Part of [rwa-call-contracts](https://github.com/RWA-Call/rwa-call-contracts)
 
 On-chain registry for authorized watcher node addresses. An admin (or set of
 admins) controls which off-chain watcher nodes are permitted to interact with
@@ -75,7 +75,7 @@ stellar contract invoke \
 ## TypeScript bindings
 
 ```bash
-npm install @tx-wat/watcher-registry @stellar/stellar-sdk
+npm install @rwa-call/watcher-registry @stellar/stellar-sdk
 ```
 
 See [bindings/watcher-registry](../../bindings/watcher-registry/README.md).

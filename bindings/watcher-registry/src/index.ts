@@ -1,5 +1,5 @@
 /**
- * @tx-wat/watcher-registry
+ * @rwa-call/watcher-registry
  *
  * TypeScript bindings for the WatcherRegistry Soroban smart contract.
  *
@@ -12,9 +12,9 @@
  * generated file. This entry point re-exports them and adds the network
  * address map so consumers can do:
  *
- *   import { Client, networks } from "@tx-wat/watcher-registry";
+ *   import { Client, networks } from "@rwa-call/watcher-registry";
  *
- * @see https://github.com/Tx-wat/stellar-txwatch-contracts
+ * @see https://github.com/RWA-Call/rwa-call-contracts
  */
 
 // ── Re-export everything from the generated bindings ─────────────────────────

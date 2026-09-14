@@ -1,7 +1,7 @@
 {
-  "name": "@tx-wat/watcher-registry",
+  "name": "@rwa-call/watcher-registry",
   "version": "0.1.0",
-  "description": "TypeScript bindings for the stellar-txwatch WatcherRegistry Soroban contract",
+  "description": "TypeScript bindings for the RWA Call WatcherRegistry Soroban contract",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
@@ -25,19 +25,19 @@
     "soroban",
     "smart-contract",
     "watcher-registry",
-    "txwatch",
+    "rwa-call",
     "blockchain"
   ],
-  "author": "Tx-wat <https://github.com/Tx-wat>",
+  "author": "RWA-Call <https://github.com/RWA-Call>",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Tx-wat/stellar-txwatch-contracts.git",
+    "url": "https://github.com/RWA-Call/rwa-call-contracts.git",
     "directory": "bindings/watcher-registry"
   },
-  "homepage": "https://github.com/Tx-wat/stellar-txwatch-contracts#readme",
+  "homepage": "https://github.com/RWA-Call/rwa-call-contracts#readme",
   "bugs": {
-    "url": "https://github.com/Tx-wat/stellar-txwatch-contracts/issues"
+    "url": "https://github.com/RWA-Call/rwa-call-contracts/issues"
   },
   "peerDependencies": {
     "@stellar/stellar-sdk": ">=12.0.0"

@@ -46,7 +46,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - All `extend_ttl(_, 100, 100)` calls replaced with `extend_ttl(_, DEFAULT_TTL, DEFAULT_TTL)`.
 
 - `get_watcher_count` function to WatcherRegistry for efficient watcher count queries (#21)
-- TypeScript bindings for AlertRegistry published to npm as `@tx-wat/alert-registry-bindings` (#120)
+- TypeScript bindings for AlertRegistry published to npm as `@rwa-call/alert-registry-bindings` (#120)
 - GitHub Actions workflow for automated npm publishing of TypeScript bindings
 - `make bindings` target for local TypeScript binding generation
 - Documentation for `get_watcher_count` in `docs/watcher-registry.md`
@@ -56,7 +56,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `docs/ttl.md` documenting TTL values and their implications (#77)
 - Inline rustdoc comments on all public and key private functions (#78)
 - Expanded `.gitignore` to exclude build artifacts and test snapshots
-- `bindings/watcher-registry` — TypeScript bindings package `@tx-wat/watcher-registry` generated via `stellar contract bindings typescript`
+- `bindings/watcher-registry` — TypeScript bindings package `@rwa-call/watcher-registry` generated via `stellar contract bindings typescript`
 - `.github/workflows/publish-bindings.yml` — CI workflow that generates and publishes TypeScript bindings to npm on every GitHub release
 - `docs/ecosystem-submission.md` — step-by-step guide for submitting to the Stellar Developer Tools ecosystem listing and the `stellar/soroban-examples` repository
 - `contracts/watcher-registry/README.md` and `contracts/alert-registry/README.md` — per-contract READMEs required for the soroban-examples submission
@@ -73,5 +73,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Function reference docs in `docs/alert-registry.md` and `docs/watcher-registry.md`
 - Contribution guidelines in `CONTRIBUTING.md`
 
-[Unreleased]: https://github.com/Tx-wat/stellar-txwatch-contracts/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/Tx-wat/stellar-txwatch-contracts/releases/tag/v0.1.0
+[Unreleased]: https://github.com/RWA-Call/rwa-call-contracts/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/RWA-Call/rwa-call-contracts/releases/tag/v0.1.0
