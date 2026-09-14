@@ -20,10 +20,11 @@ jobs:
       - name: Install Rust
         uses: dtolnay/rust-toolchain@master
         with:
+          toolchain: 1.88.0
           targets: wasm32-unknown-unknown
 
       - name: Build WASM binaries
-        run: cargo build --release --target wasm32-unknown-unknown
+        run: cargo build --release --target wasm32-unknown-unknown -p alert-registry -p watcher-registry
 
       - name: Check binary sizes
         run: |

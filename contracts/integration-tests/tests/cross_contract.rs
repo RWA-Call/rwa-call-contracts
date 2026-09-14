@@ -1,5 +1,7 @@
 use alert_registry::{AlertRegistry, AlertRegistryClient, ContractError as AlertError};
-use soroban_sdk::{testutils::Address as _, vec, Address, Env, String};
+use soroban_sdk::{
+    symbol_short, testutils::Address as _, vec, Address, Env, String, Symbol, TryFromVal,
+};
 use watcher_registry::{WatcherRegistry, WatcherRegistryClient};
 
 // Re-export setup_both as setup so all tests below compile unchanged.
@@ -9,6 +11,13 @@ use test_utils::str;
 // `setup_both` returns (env, alert_client, watcher_client) — same shape as the
 // old local `setup()` function, so all tests below compile unchanged.
 
+// Topic equality helper: Soroban `Val` has no `PartialEq`, so compare via `Symbol`.
+fn hash64(env: &Env) -> String {
+    String::from_str(env, &"a".repeat(64))
+}
+fn topic_is(env: &Env, val: &soroban_sdk::Val, sym: Symbol) -> bool {
+    Symbol::try_from_val(env, val).unwrap_or(symbol_short!("")) == sym
+}
 /// An authorized watcher can query AlertRegistry and see registered alerts
 /// when no watcher-gating is configured (open access mode).
 #[test]
@@ -29,7 +38,7 @@ fn test_authorized_watcher_can_query_alert_registry_open_mode() {
         &owner,
         &target,
         &str(&env, "Cross-contract alert"),
-        &str(&env, "webhook-hash-abc"),
+        &hash64(&env),
         &vec![&env, str(&env, "rule:transfer")],
     );
 
@@ -37,9 +46,7 @@ fn test_authorized_watcher_can_query_alert_registry_open_mode() {
     assert!(watcher_client.is_watcher_authorized(&watcher));
 
     // No gating configured — watcher queries the alert registry freely
-    let alerts = alert_client
-        .get_alerts_for_contract(&watcher, &target)
-        .unwrap();
+    let alerts = alert_client.get_alerts_for_contract(&watcher, &target);
     assert_eq!(alerts.len(), 1);
     assert_eq!(
         alerts.get(0).unwrap().label,
@@ -82,7 +89,7 @@ fn test_removed_watcher_loses_authorization_alert_data_intact() {
         &owner,
         &target,
         &str(&env, "Alert"),
-        &str(&env, "hash"),
+        &hash64(&env),
         &vec![&env],
     );
 
@@ -94,7 +101,6 @@ fn test_removed_watcher_loses_authorization_alert_data_intact() {
     assert_eq!(
         alert_client
             .get_alerts_for_contract(&watcher, &target)
-            .unwrap()
             .len(),
         1
     );
@@ -115,24 +121,20 @@ fn test_watcher_gating_registered_watcher_can_read() {
     watcher_client.register_watcher(&admin, &watcher);
 
     // Initialize alert registry and point it at the watcher registry
-    alert_client.initialize(&admin).unwrap();
+    alert_client.initialize(&admin);
     let watcher_contract_id = watcher_client.address.clone();
-    alert_client
-        .set_watcher_registry(&admin, &watcher_contract_id)
-        .unwrap();
+    alert_client.set_watcher_registry(&admin, &watcher_contract_id);
 
     alert_client.register_alert(
         &owner,
         &target,
         &String::from_str(&env, "Gated Alert"),
-        &String::from_str(&env, "hash"),
+        &hash64(&env),
         &vec![&env, String::from_str(&env, "rule:transfer")],
     );
 
     // Registered watcher can read
-    let results = alert_client
-        .get_alerts_for_contract(&watcher, &target)
-        .unwrap();
+    let results = alert_client.get_alerts_for_contract(&watcher, &target);
     assert_eq!(results.len(), 1);
     assert_eq!(
         results.get(0).unwrap().label,
@@ -153,17 +155,15 @@ fn test_watcher_gating_unregistered_address_rejected() {
     watcher_client.initialize(&admin);
     // stranger is NOT registered as a watcher
 
-    alert_client.initialize(&admin).unwrap();
+    alert_client.initialize(&admin);
     let watcher_contract_id = watcher_client.address.clone();
-    alert_client
-        .set_watcher_registry(&admin, &watcher_contract_id)
-        .unwrap();
+    alert_client.set_watcher_registry(&admin, &watcher_contract_id);
 
     alert_client.register_alert(
         &owner,
         &target,
         &String::from_str(&env, "Alert"),
-        &String::from_str(&env, "hash"),
+        &hash64(&env),
         &vec![&env],
     );
 
@@ -189,17 +189,15 @@ fn test_watcher_gating_removed_watcher_loses_access() {
     watcher_client.initialize(&admin);
     watcher_client.register_watcher(&admin, &watcher);
 
-    alert_client.initialize(&admin).unwrap();
+    alert_client.initialize(&admin);
     let watcher_contract_id = watcher_client.address.clone();
-    alert_client
-        .set_watcher_registry(&admin, &watcher_contract_id)
-        .unwrap();
+    alert_client.set_watcher_registry(&admin, &watcher_contract_id);
 
     alert_client.register_alert(
         &owner,
         &target,
         &String::from_str(&env, "Alert"),
-        &String::from_str(&env, "hash"),
+        &hash64(&env),
         &vec![&env],
     );
 
@@ -207,7 +205,6 @@ fn test_watcher_gating_removed_watcher_loses_access() {
     assert_eq!(
         alert_client
             .get_alerts_for_contract(&watcher, &target)
-            .unwrap()
             .len(),
         1
     );
@@ -219,9 +216,9 @@ fn test_watcher_gating_removed_watcher_loses_access() {
     assert_eq!(
         alert_client
             .try_get_alerts_for_contract(&watcher, &target)
-            .unwrap_err()
-            .unwrap(),
-        AlertError::NotAWatcher
+            .err()
+            .and_then(|inner| inner.ok()),
+        Some(AlertError::NotAWatcher)
     );
 }
 
@@ -239,36 +236,28 @@ fn test_watcher_gating_get_alerts_by_owner() {
     watcher_client.initialize(&admin);
     watcher_client.register_watcher(&admin, &watcher);
 
-    alert_client.initialize(&admin).unwrap();
+    alert_client.initialize(&admin);
     let watcher_contract_id = watcher_client.address.clone();
-    alert_client
-        .set_watcher_registry(&admin, &watcher_contract_id)
-        .unwrap();
+    alert_client.set_watcher_registry(&admin, &watcher_contract_id);
 
     alert_client.register_alert(
         &owner,
         &target,
         &String::from_str(&env, "Alert"),
-        &String::from_str(&env, "hash"),
+        &hash64(&env),
         &vec![&env],
     );
 
     // Registered watcher can query by owner
-    assert_eq!(
-        alert_client
-            .get_alerts_by_owner(&watcher, &owner)
-            .unwrap()
-            .len(),
-        1
-    );
+    assert_eq!(alert_client.get_alerts_by_owner(&watcher, &owner).len(), 1);
 
     // Stranger is rejected
     assert_eq!(
         alert_client
             .try_get_alerts_by_owner(&stranger, &owner)
-            .unwrap_err()
-            .unwrap(),
-        AlertError::NotAWatcher
+            .err()
+            .and_then(|inner| inner.ok()),
+        Some(AlertError::NotAWatcher)
     );
 }
 
@@ -287,22 +276,25 @@ fn test_remove_watcher_emits_event_with_correct_address() {
     let watcher = Address::generate(&env);
 
     watcher_client.initialize(&admin);
-    watcher_client.register_watcher(&admin, &watcher).unwrap();
-    watcher_client.remove_watcher(&admin, &watcher).unwrap();
+    watcher_client.register_watcher(&admin, &watcher);
+    watcher_client.remove_watcher(&admin, &watcher);
 
     let events = env.events().all();
     let remove_event = events
         .iter()
         .find(|(_, topics, _)| {
             topics.len() == 2
-                && topics.get(0).unwrap() == symbol_short!("watcher").into()
-                && topics.get(1).unwrap() == symbol_short!("remove").into()
+                && topic_is(&env, &topics.get(0).unwrap(), symbol_short!("watcher"))
+                && topic_is(&env, &topics.get(1).unwrap(), symbol_short!("remove"))
         })
         .expect("watcher.remove event must be emitted");
 
     let (_, _, data) = remove_event;
     let emitted: Address = soroban_sdk::FromVal::from_val(&env, &data);
-    assert_eq!(emitted, watcher, "event data must carry the deauthorized watcher address");
+    assert_eq!(
+        emitted, watcher,
+        "event data must carry the deauthorized watcher address"
+    );
 }
 
 /// After a watcher is removed, the `watcher.remove` event is emitted AND the
@@ -319,19 +311,17 @@ fn test_remove_watcher_event_and_immediate_access_revocation() {
     let target = Address::generate(&env);
 
     watcher_client.initialize(&admin);
-    watcher_client.register_watcher(&admin, &watcher).unwrap();
+    watcher_client.register_watcher(&admin, &watcher);
 
-    alert_client.initialize(&admin).unwrap();
+    alert_client.initialize(&admin);
     let watcher_contract_id = watcher_client.address.clone();
-    alert_client
-        .set_watcher_registry(&admin, &watcher_contract_id)
-        .unwrap();
+    alert_client.set_watcher_registry(&admin, &watcher_contract_id);
 
     alert_client.register_alert(
         &owner,
         &target,
         &String::from_str(&env, "Alert"),
-        &String::from_str(&env, "hash"),
+        &hash64(&env),
         &vec![&env],
     );
 
@@ -339,30 +329,32 @@ fn test_remove_watcher_event_and_immediate_access_revocation() {
     assert_eq!(
         alert_client
             .get_alerts_for_contract(&watcher, &target)
-            .unwrap()
             .len(),
         1
     );
 
     // Remove the watcher — this must emit the event
-    watcher_client.remove_watcher(&admin, &watcher).unwrap();
+    watcher_client.remove_watcher(&admin, &watcher);
 
     // Verify the event was emitted
     let events = env.events().all();
     let has_remove_event = events.iter().any(|(_, topics, _)| {
         topics.len() == 2
-            && topics.get(0).unwrap() == symbol_short!("watcher").into()
-            && topics.get(1).unwrap() == symbol_short!("remove").into()
+            && topic_is(&env, &topics.get(0).unwrap(), symbol_short!("watcher"))
+            && topic_is(&env, &topics.get(1).unwrap(), symbol_short!("remove"))
     });
-    assert!(has_remove_event, "watcher.remove event must be emitted on deauthorization");
+    assert!(
+        has_remove_event,
+        "watcher.remove event must be emitted on deauthorization"
+    );
 
     // Access is revoked immediately — no delay, no cache
     assert_eq!(
         alert_client
             .try_get_alerts_for_contract(&watcher, &target)
-            .unwrap_err()
-            .unwrap(),
-        AlertError::NotAWatcher
+            .err()
+            .and_then(|inner| inner.ok()),
+        Some(AlertError::NotAWatcher)
     );
 }
 
@@ -382,7 +374,7 @@ fn test_bump_alert_by_third_party() {
         &owner,
         &target,
         &String::from_str(&env, "Long-lived Alert"),
-        &String::from_str(&env, "hash"),
+        &hash64(&env),
         &vec![&env],
     );
 
@@ -390,7 +382,7 @@ fn test_bump_alert_by_third_party() {
 
     // A third-party keeper bumps the TTL — no auth needed
     let _ = keeper; // keeper address not used for auth, just illustrative
-    alert_client.bump_alert(&id, &535_680u32).unwrap();
+    alert_client.bump_alert(&id, &535_680u32);
 
     let after = alert_client.get_alert(&id).unwrap();
 
